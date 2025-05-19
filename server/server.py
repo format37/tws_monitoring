@@ -49,7 +49,7 @@ def run_client(app):
         app.exception_queue.put(f"Client thread error: {str(e)}")
         logging.error(f"Client thread error: {str(e)}")
 
-def check_tws_api_health(host="localhost", port=9999, timeout=5):
+def check_tws_api_health(host="localhost", port=9999, timeout=5, client_id=10):
     """
     Check the health of the TWS API.
     Returns tuple of (is_healthy, status_message).
@@ -59,8 +59,7 @@ def check_tws_api_health(host="localhost", port=9999, timeout=5):
     client_thread = None
 
     try:
-        # Connect to TWS API with a random client ID
-        client_id = random.randint(0, 10000)
+        # Connect to TWS API with a provided client ID
         app.connect(host, port, clientId=client_id)
 
         # Start the client loop in a separate thread
@@ -129,7 +128,8 @@ def main():
         'fail_sleep': 60,    # Check every minute even if failed
         'hourly_reminder': int(os.environ.get('HOURLY_REMINDER', 3600)),  # 1 hour
         'host': os.environ.get('TWS_HOST', 'localhost'),
-        'port': int(os.environ.get('TWS_PORT', 9999))
+        'port': int(os.environ.get('TWS_PORT', 9999)),
+        'client_id': int(os.environ.get('TWS_CLIENT_ID', 10))
     }
 
     # Validate required environment variables
@@ -160,7 +160,8 @@ def main():
             current_time = time.time()
             is_healthy, status_message = check_tws_api_health(
                 host=config['host'],
-                port=config['port']
+                port=config['port'],
+                client_id=config['client_id']
             )
 
             # Notify on health down (transition up->down or still down and hourly reminder)
