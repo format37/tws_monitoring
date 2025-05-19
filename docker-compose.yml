@@ -17,4 +17,5 @@ services:
       - CHAT_ID=${CHAT_ID}
       - TWS_HOST=${TWS_HOST}
       - TWS_PORT=${TWS_PORT}
+      - TWS_CLIENT_ID=${TWS_CLIENT_ID}
       - CONTAINER_NAME=${CONTAINER_NAME}

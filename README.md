@@ -11,6 +11,8 @@ nano .env
 ```
 BOT_TOKEN=YourBotToken
 CHAT_ID=YourChatID
+TWS_HOST=localhost
+TWS_PORT=9999
 TWS_CLIENT_ID=10
 CONTAINER_NAME=tws_monitoring
 ```
