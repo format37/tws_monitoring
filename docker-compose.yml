@@ -1,7 +1,7 @@
 services:
   tws_monitoring:
     container_name: tws_monitoring
-    # restart: always
+    restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
@@ -10,9 +10,9 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-    network_mode: host
-    # ports:
-    #   - "9999:9999"
+    # network_mode: host
+    ports:
+      - "9999:9999"
     environment:
       - TZ=UTC
       - BOT_TOKEN=${BOT_TOKEN}

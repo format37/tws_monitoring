@@ -24,7 +24,7 @@ async def check_tws_api_health(host="localhost", port=9999, timeout=5, client_id
             server_time = await asyncio.wait_for(ib.reqCurrentTimeAsync(), timeout=timeout)
         except Exception as e:
             return False, f"Failed to receive server time response: {e}"
-        return True, f"TWS API is healthy and responsive. Server time: {server_time}"
+        return True, f"TWS API is healthy and responsive."
     except asyncio.TimeoutError:
         return False, "Connection or server time request timed out."
     except Exception as e:
