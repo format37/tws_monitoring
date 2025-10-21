@@ -10,9 +10,7 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-    # network_mode: host
-    ports:
-      - "9999:9999"
+    network_mode: "container:openvpn"
     environment:
       - TZ=UTC
       - BOT_TOKEN=${BOT_TOKEN}
