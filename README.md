@@ -11,10 +11,13 @@ nano .env
 ```
 BOT_TOKEN=YourBotToken
 CHAT_ID=YourChatID
-TWS_HOST=localhost
-TWS_PORT=9999
-TWS_CLIENT_ID=10
-CONTAINER_NAME=tws_monitoring
+```
+* TWS connection settings are configured in docker-compose.yml for each monitoring service (tws_monitoring_dnk, tws_monitoring_oleg):
+```
+  - `TWS_HOST` - TWS API host address
+  - `TWS_PORT` - TWS API port
+  - `TWS_CLIENT_ID` - Client ID for TWS connection
+  - `CONTAINER_NAME` - Container identifier for notifications
 ```
 * Provide run access
 ```

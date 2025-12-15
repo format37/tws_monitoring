@@ -1,6 +1,6 @@
 services:
-  tws_monitoring:
-    container_name: tws_monitoring
+  tws_monitoring_dnk:
+    container_name: tws_monitoring_dnk
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -15,7 +15,27 @@ services:
       - TZ=UTC
       - BOT_TOKEN=${BOT_TOKEN}
       - CHAT_ID=${CHAT_ID}
-      - TWS_HOST=${TWS_HOST}
-      - TWS_PORT=${TWS_PORT}
-      - TWS_CLIENT_ID=${TWS_CLIENT_ID}
-      - CONTAINER_NAME=${CONTAINER_NAME}
+      - TWS_HOST=192.168.255.6
+      - TWS_PORT=9999
+      - TWS_CLIENT_ID=10
+      - CONTAINER_NAME=tws_monitoring_dnk
+  tws_monitoring_oleg:
+    container_name: tws_monitoring_oleg
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    build: server
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    network_mode: "container:openvpn"
+    environment:
+      - TZ=UTC
+      - BOT_TOKEN=${BOT_TOKEN}
+      - CHAT_ID=${CHAT_ID}
+      - TWS_HOST=192.168.255.10
+      - TWS_PORT=9999
+      - TWS_CLIENT_ID=10
+      - CONTAINER_NAME=tws_monitoring_oleg

@@ -1,12 +1,4 @@
 source .env
-
-# Break if $CONTAINER_NAME is not set
-if [ -z "$CONTAINER_NAME" ]; then
-    echo "CONTAINER_NAME is not set"
-    exit 1
-else
-    echo "CONTAINER_NAME is set to $CONTAINER_NAME"
-fi
-
-sudo docker rm -fv "$CONTAINER_NAME" || true
-sudo docker compose up --build --remove-orphans -d --force-recreate $CONTAINER_NAME
+sudo docker rm -fv tws_monitoring_dnk || true
+sudo docker rm -fv tws_monitoring_oleg || true
+sudo docker compose up --build --remove-orphans -d --force-recreate tws_monitoring_dnk tws_monitoring_oleg

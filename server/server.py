@@ -57,7 +57,8 @@ async def main():
         'hourly_reminder': int(os.environ.get('HOURLY_REMINDER', 3600)),  # 1 hour
         'host': os.environ.get('TWS_HOST', 'localhost'),
         'port': int(os.environ.get('TWS_PORT', 9999)),
-        'client_id': int(os.environ.get('TWS_CLIENT_ID', 10))
+        'client_id': int(os.environ.get('TWS_CLIENT_ID', 10)),
+        'container_name': os.environ.get('CONTAINER_NAME', 'tws_monitoring')
     }
 
     # Validate required environment variables
@@ -73,11 +74,12 @@ async def main():
         )
         return
 
-    logging.info("Starting the TWS API monitoring service")
+    container_name = config['container_name']
+    logging.info(f"Starting the TWS API monitoring service for {container_name}")
     send_telegram_message(
         config['telegram_token'],
         config['chat_id'],
-        "TWS API monitoring started"
+        f"[{container_name}] TWS API monitoring started"
     )
 
     previous_is_healthy = None
@@ -98,7 +100,7 @@ async def main():
                 send_telegram_message(
                     config['telegram_token'],
                     config['chat_id'],
-                    status_message
+                    f"[{container_name}] {status_message}"
                 )
                 last_reminder_time = current_time
             elif not is_healthy and (current_time - last_reminder_time) >= config['hourly_reminder']:
@@ -106,7 +108,7 @@ async def main():
                 send_telegram_message(
                     config['telegram_token'],
                     config['chat_id'],
-                    f"Reminder: {status_message}"
+                    f"[{container_name}] Reminder: {status_message}"
                 )
                 last_reminder_time = current_time
 
@@ -117,11 +119,11 @@ async def main():
             await asyncio.sleep(sleep_time)
 
         except KeyboardInterrupt:
-            logging.info("Shutting down TWS API monitoring service")
+            logging.info(f"Shutting down TWS API monitoring service for {container_name}")
             send_telegram_message(
                 config['telegram_token'],
                 config['chat_id'],
-                "TWS API monitoring stopped"
+                f"[{container_name}] TWS API monitoring stopped"
             )
             break
         except Exception as e:
