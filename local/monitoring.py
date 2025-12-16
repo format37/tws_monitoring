@@ -122,9 +122,10 @@ def stop_tws_process(port: int) -> bool:
 def start_tws() -> bool:
     """Start TWS using IBC batch file."""
     cmd = r'C:\IBC_L\StartTWS.bat'
+    cwd = r'C:\IBC_S'
     try:
-        subprocess.Popen(cmd, shell=True)
-        logging.info("Started TWS via StartTWS.bat")
+        subprocess.Popen(cmd, shell=True, cwd=cwd)
+        logging.info(f"Started TWS via StartTWS.bat (cwd={cwd})")
         return True
     except Exception as e:
         logging.error(f"Failed to start TWS: {e}")
