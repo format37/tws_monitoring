@@ -120,13 +120,17 @@ def stop_tws_process(port: int) -> bool:
 
 
 def start_tws() -> bool:
-    """Start TWS using IBC batch file."""
-    cmd = r'C:\IBC_L\StartTWS.bat'
-    cwd = r'C:\IBC_S'
+    """Start TWS using Windows Task Scheduler."""
+    task_name = "tws singapore"
+    cmd = f'schtasks /run /tn "{task_name}"'
     try:
-        subprocess.Popen(cmd, shell=True, cwd=cwd)
-        logging.info(f"Started TWS via StartTWS.bat (cwd={cwd})")
-        return True
+        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        if result.returncode == 0:
+            logging.info(f"Started TWS via scheduled task '{task_name}'")
+            return True
+        else:
+            logging.error(f"Failed to start scheduled task: {result.stderr}")
+            return False
     except Exception as e:
         logging.error(f"Failed to start TWS: {e}")
         return False
