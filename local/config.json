@@ -6,6 +6,7 @@
   "bot_token": "YOUR_BOT_TOKEN",
   "chat_id": "YOUR_CHAT_ID",
   "wait_after_stop": 60,
+  "wait_after_start": 180,
   "check_interval": 60,
   "notify_on_start": true,
   "notify_on_restart": true,

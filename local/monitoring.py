@@ -141,6 +141,7 @@ async def restart_tws(config: dict) -> None:
     name = config["name"]
     port = config["port"]
     wait_after_stop = config.get("wait_after_stop", 30)
+    wait_after_start = config.get("wait_after_start", 180)
 
     # Send notification if enabled
     if config.get("notify_on_restart", True):
@@ -161,6 +162,10 @@ async def restart_tws(config: dict) -> None:
     # Start TWS
     logging.info("Starting TWS...")
     start_tws()
+
+    # Wait for TWS to fully start
+    logging.info(f"Waiting {wait_after_start} seconds for TWS to start...")
+    await asyncio.sleep(wait_after_start)
 
 
 async def main():
