@@ -142,12 +142,13 @@ async def restart_tws(config: dict) -> None:
     port = config["port"]
     wait_after_stop = config.get("wait_after_stop", 30)
 
-    # Send notification
-    send_telegram_message(
-        config["bot_token"],
-        config["chat_id"],
-        f"{name}: restarting TWS"
-    )
+    # Send notification if enabled
+    if config.get("notify_on_restart", True):
+        send_telegram_message(
+            config["bot_token"],
+            config["chat_id"],
+            f"{name}: restarting TWS"
+        )
 
     # Stop TWS process
     logging.info(f"Stopping TWS process on port {port}...")
@@ -172,11 +173,12 @@ async def main():
     check_interval = config.get("check_interval", 60)
 
     logging.info(f"Starting TWS monitoring service: {name}")
-    send_telegram_message(
-        config["bot_token"],
-        config["chat_id"],
-        f"{name}: TWS monitoring started"
-    )
+    if config.get("notify_on_start", True):
+        send_telegram_message(
+            config["bot_token"],
+            config["chat_id"],
+            f"{name}: TWS monitoring started"
+        )
 
     while True:
         try:

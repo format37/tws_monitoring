@@ -7,6 +7,8 @@
   "chat_id": "YOUR_CHAT_ID",
   "wait_after_stop": 60,
   "check_interval": 60,
+  "notify_on_start": true,
+  "notify_on_restart": true,
   "pause_windows": {
     "weekends": {
       "timezone": "America/New_York"
